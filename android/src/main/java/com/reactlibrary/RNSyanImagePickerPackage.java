@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.syanPackage;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;

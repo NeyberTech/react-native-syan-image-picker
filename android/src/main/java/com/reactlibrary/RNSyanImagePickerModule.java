@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.syanPackage;
 
 import android.app.Activity;
 import android.content.Intent;
