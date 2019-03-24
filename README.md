@@ -135,7 +135,7 @@ android {
 ### Android
 
 1. Open up `android/app/src/main/java/[...]/MainApplication.java`
-  - Add `import com.reactlibrary.RNSyanImagePickerPackage;` to the imports at the top of the file
+  - Add `import com.syanPackage.RNSyanImagePickerPackage;` to the imports at the top of the file
   - Add `new RNSyanImagePickerPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```gradle
