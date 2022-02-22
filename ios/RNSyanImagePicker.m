@@ -108,7 +108,7 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
 }
 
 - (void)openTZImagePicker:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback {
-    NSString themeColor = [options sy_stringForKey:@"themeColor"];
+    NSString *themeColor = [options sy_stringForKey:@"themeColor"];
     NSInteger imageCount = [options sy_integerForKey:@"imageCount"];
     BOOL isCamera        = [options sy_boolForKey:@"isCamera"];
     BOOL isCrop          = [options sy_boolForKey:@"isCrop"];
@@ -206,7 +206,7 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
 }
 
 - (void)openImagePicker {
-    NSString themeColor = [options sy_stringForKey:@"themeColor"];
+    NSString *themeColor = [options sy_stringForKey:@"themeColor"];
     // 照片最大可选张数
     NSInteger imageCount = [self.cameraOptions sy_integerForKey:@"imageCount"];
     // 显示内部拍照按钮
