@@ -428,8 +428,7 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
             }];
         } else {
             BOOL isGIF = [[TZImageManager manager] getAssetType:asset] == TZAssetModelMediaTypePhotoGif;
-            if (isGIF || isSelectOriginalPhoto) {
-               [[TZImageManager manager] requestImageDataForAsset:asset completion:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+            [[TZImageManager manager] requestImageDataForAsset:asset completion:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
                    [selectedPhotos addObject:[self handleOriginalPhotoData:imageData phAsset:asset isGIF:isGIF quality:quality]];
                    if ([selectedPhotos count] == [assets count]) {
                        completion(selectedPhotos);
@@ -440,12 +439,24 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
                 } progressHandler:^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
 
                 }];
-            } else {
-                [selectedPhotos addObject:[self handleCropImage:photos[idx] phAsset:asset quality:quality]];
-                if ([selectedPhotos count] == [assets count]) {
-                    completion(selectedPhotos);
-                }
-            }
+            // if (isGIF || isSelectOriginalPhoto) {
+            //    [[TZImageManager manager] requestImageDataForAsset:asset completion:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+            //        [selectedPhotos addObject:[self handleOriginalPhotoData:imageData phAsset:asset isGIF:isGIF quality:quality]];
+            //        if ([selectedPhotos count] == [assets count]) {
+            //            completion(selectedPhotos);
+            //        }
+            //        if (idx + 1 == [assets count] && [selectedPhotos count] != [assets count]) {
+            //            fail(nil);
+            //        }
+            //     } progressHandler:^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
+
+            //     }];
+            // } else {
+            //     [selectedPhotos addObject:[self handleCropImage:photos[idx] phAsset:asset quality:quality]];
+            //     if ([selectedPhotos count] == [assets count]) {
+            //         completion(selectedPhotos);
+            //     }
+            // }
         }
     }];
 }
