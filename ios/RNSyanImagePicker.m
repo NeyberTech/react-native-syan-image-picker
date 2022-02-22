@@ -6,6 +6,7 @@
 #import "TZImageCropManager.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <React/RCTUtils.h>
+#import "UIColor+Hex.h"
 
 @interface RNSyanImagePicker ()
 
@@ -107,6 +108,7 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
 }
 
 - (void)openTZImagePicker:(NSDictionary *)options callback:(RCTResponseSenderBlock)callback {
+    NSString themeColor = [options sy_stringForKey:@"themeColor"];
     NSInteger imageCount = [options sy_integerForKey:@"imageCount"];
     BOOL isCamera        = [options sy_boolForKey:@"isCamera"];
     BOOL isCrop          = [options sy_boolForKey:@"isCrop"];
@@ -128,6 +130,8 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
 
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:imageCount delegate:self];
 
+    imagePickerVc.iconThemeColor = [UIColor colorWithHexString:themeColor];
+    imagePickerVc.oKButtonTitleColorNormal = [UIColor colorWithHexString:themeColor];
     imagePickerVc.maxImagesCount = imageCount;
     imagePickerVc.allowPickingGif = isGif; // 允许GIF
     imagePickerVc.allowTakePicture = isCamera; // 允许用户在内部拍照
@@ -202,6 +206,7 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
 }
 
 - (void)openImagePicker {
+    NSString themeColor = [options sy_stringForKey:@"themeColor"];
     // 照片最大可选张数
     NSInteger imageCount = [self.cameraOptions sy_integerForKey:@"imageCount"];
     // 显示内部拍照按钮
@@ -221,6 +226,8 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
 
     TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:imageCount delegate:self];
 
+    imagePickerVc.iconThemeColor = [UIColor colorWithHexString:themeColor];
+    imagePickerVc.oKButtonTitleColorNormal = [UIColor colorWithHexString:themeColor];
     imagePickerVc.maxImagesCount = imageCount;
     imagePickerVc.allowPickingGif = isGif; // 允许GIF
     imagePickerVc.allowTakePicture = isCamera; // 允许用户在内部拍照
