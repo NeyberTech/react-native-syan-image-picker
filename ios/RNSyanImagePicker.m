@@ -206,7 +206,7 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
 }
 
 - (void)openImagePicker {
-    NSString *themeColor = [options sy_stringForKey:@"themeColor"];
+    NSString *themeColor = [self.cameraOptions sy_stringForKey:@"themeColor"];
     // 照片最大可选张数
     NSInteger imageCount = [self.cameraOptions sy_integerForKey:@"imageCount"];
     // 显示内部拍照按钮
