@@ -1,0 +1,5 @@
+sourceControl {
+    gitRepository("https://github.com/NeyberTech/PictureSelector.git") {
+        producesModule("com.github.NeyberTech:PictureSelector")
+    }
+}
