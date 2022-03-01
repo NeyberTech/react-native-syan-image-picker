@@ -417,8 +417,8 @@ public class RNSyanImagePickerModule extends ReactContextBaseJavaModule {
         imageMap.putDouble("width", options.outWidth);
         imageMap.putDouble("height", options.outHeight);
         imageMap.putString("type", "image");
-        imageMap.putString("uri", "file://" + path);
-        imageMap.putString("original_uri", "file://" + media.getPath());
+        imageMap.putString("uri", path);
+        imageMap.putString("original_uri", media.getPath());
         imageMap.putInt("size", (int) new File(path).length());
 
         if (enableBase64) {
