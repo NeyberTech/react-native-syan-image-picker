@@ -179,12 +179,13 @@ public class RNSyanImagePickerModule extends ReactContextBaseJavaModule {
 
         Boolean isAndroidQ = SdkVersionUtils.checkedAndroid_Q();
 
-        // PictureParameterStyle mPictureParameterStyle = getMSStyle();
+        PictureParameterStyle mPictureParameterStyle = getMSStyle();
 
         Activity currentActivity = getCurrentActivity();
         PictureSelector.create(currentActivity)
                 .openGallery(PictureMimeType.ofImage())//全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .loadImageEngine(GlideEngine.createGlideEngine())
+                .setPictureStyle(mPictureParameterStyle)// 动态自定义相册主题
                 .maxSelectNum(imageCount)// 最大图片选择数量 int
                 .minSelectNum(0)// 最小选择数量 int
                 .imageSpanCount(4)// 每行显示个数 int
@@ -213,10 +214,9 @@ public class RNSyanImagePickerModule extends ReactContextBaseJavaModule {
                 .rotateEnabled(rotateEnabled) // 裁剪是否可旋转图片 true or false
                 .scaleEnabled(scaleEnabled)// 裁剪是否可放大缩小图片 true or false
                 .selectionMedia(selectList) // 当前已选中的图片 List
-                .isWeChatStyle(true)
-                .theme(R.style.picture_WeChat_style)
-                // .setPictureStyle(mPictureParameterStyle)// 动态自定义相册主题
-                .setPictureUIStyle(PictureSelectorUIStyle.ofNewStyle())
+                .isWeChatStyle(false)
+                // .theme(R.style.R.style.picture_default_style)
+               
                 .compressFocusAlpha(compressFocusAlpha)
                 .forResult(PictureConfig.CHOOSE_REQUEST); //结果回调onActivityResult code
                 
@@ -541,9 +541,11 @@ public class RNSyanImagePickerModule extends ReactContextBaseJavaModule {
         // 是否开启类似QQ相册带数字选择风格
         mPictureParameterStyle.isOpenCheckNumStyle = true;
         // 相册状态栏背景色
-        mPictureParameterStyle.pictureStatusBarColor = Color.parseColor("#7662E2");
+        mPictureParameterStyle.pictureStatusBarColor = Color.parseColor("#393a3e");
         // 相册列表标题栏背景色
-        mPictureParameterStyle.pictureTitleBarBackgroundColor = Color.parseColor("#7662E2");
+        mPictureParameterStyle.pictureTitleBarBackgroundColor = Color.parseColor("#393a3e");
+        // 相册父容器背景色
+        mPictureParameterStyle.pictureContainerBackgroundColor = Color.parseColor("#000000");
         // 相册列表标题栏右侧上拉箭头
         mPictureParameterStyle.pictureTitleUpResId = R.drawable.picture_icon_arrow_up;
         // 相册列表标题栏右侧下拉箭头
@@ -556,36 +558,45 @@ public class RNSyanImagePickerModule extends ReactContextBaseJavaModule {
         mPictureParameterStyle.pictureTitleTextColor = Color.parseColor("#FFFFFF");
         // 相册右侧取消按钮字体颜色  废弃 改用.pictureRightDefaultTextColor和.pictureRightDefaultTextColor
         mPictureParameterStyle.pictureCancelTextColor = Color.parseColor("#FFFFFF");
+        // 选择相册目录背景样式
+        // mPictureParameterStyle.pictureAlbumStyle = R.drawable.picture_new_item_select_bg;
         // 相册列表勾选图片样式
         mPictureParameterStyle.pictureCheckedStyle = R.drawable.picture_checkbox_num_selector;
         // 相册列表底部背景色
-        mPictureParameterStyle.pictureBottomBgColor = Color.parseColor("#FAFAFA");
-        // 已选数量圆点背景样式
-        mPictureParameterStyle.pictureCheckNumBgStyle = R.drawable.picture_num_oval_blue;
-        // 相册列表底下预览文字色值(预览按钮可点击时的色值)
-        mPictureParameterStyle.picturePreviewTextColor = Color.parseColor("#7662E2");
-        // 相册列表底下不可预览文字色值(预览按钮不可点击时的色值)
-        mPictureParameterStyle.pictureUnPreviewTextColor = Color.parseColor("#7662E2");
-        // 相册列表已完成色值(已完成 可点击色值)
-        mPictureParameterStyle.pictureCompleteTextColor = Color.parseColor("#7662E2");
-        // 相册列表未完成色值(请选择 不可点击色值)
-        mPictureParameterStyle.pictureUnCompleteTextColor = Color.parseColor("#7662E2");
+        mPictureParameterStyle.pictureBottomBgColor = Color.parseColor("#393a3e");
+       
         // 预览界面底部背景色
-        mPictureParameterStyle.picturePreviewBottomBgColor = Color.parseColor("#FAFAFA");
-        // 原图按钮勾选样式  需设置.isOriginalImageControl(true); 才有效
-        mPictureParameterStyle.pictureOriginalControlStyle = R.drawable.picture_original_blue_checkbox;
-        // 原图文字颜色 需设置.isOriginalImageControl(true); 才有效
-        mPictureParameterStyle.pictureOriginalFontColor = Color.parseColor("#7662E2");
+        mPictureParameterStyle.picturePreviewBottomBgColor = Color.parseColor("#393a3e");
         // 外部预览界面删除按钮样式
         mPictureParameterStyle.pictureExternalPreviewDeleteStyle = R.drawable.picture_icon_delete;
         // 外部预览界面是否显示删除按钮
         mPictureParameterStyle.pictureExternalPreviewGonePreviewDelete = true;
-        // 相册右侧按钮背景样式,只针对isWeChatStyle 为true时有效果
-        mPictureParameterStyle.pictureUnCompleteBackgroundStyle = Color.parseColor("#7662E2");
-        // 相册右侧按钮可点击背景样式,只针对isWeChatStyle 为true时有效果
-        mPictureParameterStyle.pictureCompleteBackgroundStyle = Color.parseColor("#7662E2");
-        // 相册标题背景样式 ,只针对isWeChatStyle 为true时有效果
-        mPictureParameterStyle.pictureWeChatTitleBackgroundStyle = Color.parseColor("#7662E2");
+        // 设置NavBar Color SDK Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP有效
+        mPictureParameterStyle.pictureNavBarColor = Color.parseColor("#393a3e");
+        // 文件夹字体颜色
+        mPictureParameterStyle.folderTextColor = Color.parseColor("#4d4d4d");
+        // 文件夹字体大小
+        mPictureParameterStyle.folderTextSize = 16;
+
+        // // 相册列表底下预览文字色值(预览按钮可点击时的色值)
+        // mPictureParameterStyle.picturePreviewTextColor = ContextCompat.getColor(getContext(), R.color.picture_color_fa632d);
+        // // 相册列表底下不可预览文字色值(预览按钮不可点击时的色值)
+        // mPictureParameterStyle.pictureUnPreviewTextColor = ContextCompat.getColor(getContext(), R.color.picture_color_white);
+        // // 相册列表已完成色值(已完成 可点击色值)
+        // mPictureParameterStyle.pictureCompleteTextColor = ContextCompat.getColor(getContext(), R.color.picture_color_fa632d);
+        // // 相册列表未完成色值(请选择 不可点击色值)
+        // mPictureParameterStyle.pictureUnCompleteTextColor = ContextCompat.getColor(getContext(), R.color.picture_color_white);
+
+        // 已选数量圆点背景样式
+        mPictureParameterStyle.pictureCheckNumBgStyle = R.drawable.picture_num_oval_blue;
+        // 相册列表底下预览文字色值(预览按钮可点击时的色值)
+        mPictureParameterStyle.picturePreviewTextColor = Color.parseColor("#FFFFFF");
+        // 相册列表底下不可预览文字色值(预览按钮不可点击时的色值)
+        mPictureParameterStyle.pictureUnPreviewTextColor = Color.parseColor("#A0A0A0");
+        // 相册列表已完成色值(已完成 可点击色值)
+        mPictureParameterStyle.pictureCompleteTextColor = Color.parseColor("#7662E2");
+        // 相册列表未完成色值(请选择 不可点击色值)
+        mPictureParameterStyle.pictureUnCompleteTextColor = Color.parseColor("#A0A0A0");
 
         return mPictureParameterStyle;
     }
