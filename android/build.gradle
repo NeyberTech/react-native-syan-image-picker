@@ -29,6 +29,6 @@ android {
 
 dependencies {
     implementation 'com.facebook.react:react-native:+'
-    implementation 'com.github.NeyberTech:PictureSelector:v2.7.3-NT'
+    implementation 'com.github.NeyberTech:PictureSelector:v2.7.3_3-NT'
     implementation "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
 }
