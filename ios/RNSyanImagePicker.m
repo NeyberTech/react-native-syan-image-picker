@@ -509,20 +509,26 @@ RCT_EXPORT_METHOD(openVideoPicker:(NSDictionary *)options callback:(RCTResponseS
     NSData *writeData = nil;
     NSMutableString *filePath = [NSMutableString string];
     BOOL isPNG = [fileExtension hasSuffix:@"PNG"] || [fileExtension hasSuffix:@"png"];
+    BOOL compress = [self.cameraOptions sy_boolForKey:@"compress"];
     BOOL compressFocusAlpha = [self.cameraOptions sy_boolForKey:@"compressFocusAlpha"];
     
     if (isGIF) {
         image = [UIImage sd_tz_animatedGIFWithData:data];
-        writeData = data;
     } else {
         image = [UIImage imageWithData: data];
-        writeData = (isPNG && compressFocusAlpha) ? UIImagePNGRepresentation(image) : UIImageJPEGRepresentation(image, quality/100);
     }
 
-    if (isPNG || isGIF) {
+    if (isGIF || !compress) {
+        writeData = data;
         [filePath appendString:[NSString stringWithFormat:@"%@SyanImageCaches/%@", NSTemporaryDirectory(), filename]];
     } else {
-        [filePath appendString:[NSString stringWithFormat:@"%@SyanImageCaches/%@.jpg", NSTemporaryDirectory(), [filename stringByDeletingPathExtension]]];
+        if (isPNG && compressFocusAlpha) {
+            writeData = UIImagePNGRepresentation(image);
+            [filePath appendString:[NSString stringWithFormat:@"%@SyanImageCaches/%@", NSTemporaryDirectory(), filename]];
+        } else {
+            writeData = UIImageJPEGRepresentation(image, quality/100);
+            [filePath appendString:[NSString stringWithFormat:@"%@SyanImageCaches/%@.jpg", NSTemporaryDirectory(), [filename stringByDeletingPathExtension]]];
+        }
     }
 
     [writeData writeToFile:filePath atomically:YES];
